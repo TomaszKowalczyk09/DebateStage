@@ -7,7 +7,30 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="app"></div>
+    <div class="topbar">
+        <div class="event-title" id="event-title">Debata Szkolna 2026</div>
+        <div class="clock" id="clock">11:21</div>
+    </div>
+    <div id="app">
+        <div class="debate-list-container">
+            <div class="debate-header">
+                <div class="debate-topic" id="debate-topic">Temat debaty</div>
+                <div class="debate-question" id="debate-question">Pytanie debaty</div>
+            </div>
+            <div class="speakers-section">
+                <div class="current-speaker" id="current-speaker">
+                    <span class="mic">🎤</span>
+                    <span class="name">Imię Nazwisko</span>
+                    <span class="warn">★ <span style="color: #e67c1f;">⚠</span></span>
+                </div>
+                <ol class="speakers-list" id="speakers-list">
+                    <li>Uczeń 1 (klasa)</li>
+                    <li>Uczeń 2 (klasa)</li>
+                    <li>Uczeń 3 (klasa)</li>
+                </ol>
+            </div>
+        </div>
+    </div>
     <script src="app.js"></script>
 </body>
 </html>

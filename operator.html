@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel operatora debaty</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="operator-layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">Debata</div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active">Lista mówców</a>
+                <a href="#">Tematy</a>
+                <a href="#">Uczestnicy</a>
+                <a href="#">Ustawienia</a>
+            </nav>
+        </aside>
+        <main class="operator-main">
+            <div class="operator-topbar">
+                <span class="operator-title">Panel operatora</span>
+                <span class="operator-user">Operator</span>
+            </div>
+            <section class="operator-content">
+                <h2 class="operator-section-title">TOP 4 · Debata szkolna</h2>
+                <div class="operator-current-speaker">
+                    <span class="mic">🎤</span>
+                    <span class="name">Maxi Muster</span>
+                    <span class="operator-actions">
+                        <button title="Gwiazdka">★</button>
+                        <button title="Ostrzeżenie" style="color:#e67c1f;">⚠</button>
+                        <button title="Więcej">⋮</button>
+                    </span>
+                </div>
+                <form id="add-speaker-form" class="add-speaker-form">
+                    <input type="text" id="add-speaker-input" placeholder="Imię i klasa uczestnika" required />
+                    <button type="submit">Dodaj</button>
+                </form>
+                <ol class="operator-speakers-list" id="operator-speakers-list">
+                    <!-- Lista generowana przez JS -->
+                </ol>
+            </section>
+        </main>
+    </div>
+    <script src="operator.js"></script>
+</body>
+</html>
