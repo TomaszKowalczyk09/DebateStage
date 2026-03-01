@@ -69,6 +69,9 @@ def _serialize_state(settings):
 		'currentSpeakerIndex': current_index,
 		'timerSeconds': timer_remaining_seconds,
 		'timerRunning': settings.timer_running,
+		'soundWarningEnabled': settings.sound_warning_enabled,
+		'soundEndEnabled': settings.sound_end_enabled,
+		'soundMuted': settings.sound_muted,
 		'currentSpeaker': {
 			'id': current_speaker.id,
 			'name': current_speaker.name,
@@ -126,6 +129,15 @@ def state_api(request):
 		if 'defaultSpeechSeconds' in payload:
 			settings.default_speech_seconds = max(1, _safe_int(payload['defaultSpeechSeconds'], settings.default_speech_seconds))
 
+		if 'soundWarningEnabled' in payload:
+			settings.sound_warning_enabled = bool(payload['soundWarningEnabled'])
+
+		if 'soundEndEnabled' in payload:
+			settings.sound_end_enabled = bool(payload['soundEndEnabled'])
+
+		if 'soundMuted' in payload:
+			settings.sound_muted = bool(payload['soundMuted'])
+
 		if 'currentSpeakerIndex' in payload:
 			settings.current_speaker_index = max(0, _safe_int(payload['currentSpeakerIndex'], settings.current_speaker_index))
 			settings.timer_running = False
@@ -158,6 +170,9 @@ def state_api(request):
 			'timer_remaining_seconds',
 			'timer_running',
 			'timer_started_at',
+			'sound_warning_enabled',
+			'sound_end_enabled',
+			'sound_muted',
 			'updated_at',
 		])
 

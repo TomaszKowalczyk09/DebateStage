@@ -46,6 +46,21 @@
     font-size: 1rem;
 }
 
+.debate-config-switches {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-top: 2px;
+}
+
+.debate-config-switches label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 8px;
+    color: #334155;
+}
+
 .debate-config-form button[type="submit"] {
     background: #3680a4;
     color: #fff;
@@ -377,4 +392,174 @@ body {
 }
 .speakers-list li {
     margin-bottom: 2px;
+}
+
+.projector-page {
+    background: linear-gradient(180deg, #09327b 0%, #0a3f99 100%);
+    min-height: 100vh;
+    color: #0f172a;
+}
+
+.projector-page .projector-topbar {
+    background: linear-gradient(180deg, #0f4dc4 0%, #0a3fa6 100%);
+    height: 62px;
+    padding: 0 22px;
+    box-shadow: none;
+}
+
+.projector-page .event-title-wrap {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.projector-page .event-title {
+    font-size: clamp(1.02rem, 1.05vw, 1.2rem);
+    font-weight: 700;
+}
+
+.projector-page .event-subtitle {
+    font-size: clamp(0.76rem, 0.85vw, 0.9rem);
+    opacity: 0.9;
+}
+
+.projector-page .clock {
+    font-size: clamp(1rem, 1.1vw, 1.2rem);
+    font-weight: 700;
+}
+
+.projector-page #app {
+    min-height: calc(100vh - 78px);
+    padding: 12px 18px 0;
+    box-sizing: border-box;
+    background: transparent;
+}
+
+.projector-page .projector-board {
+    width: min(1180px, calc(100vw - 48px));
+    max-width: 1180px;
+    min-width: 0;
+    margin: 0;
+    border-radius: 4px;
+    border: 1px solid #b9c8e5;
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+    padding: 14px 18px 12px;
+    background: linear-gradient(180deg, #f8fbff 0%, #edf3ff 100%);
+    max-height: calc(100vh - 92px);
+    display: flex;
+    flex-direction: column;
+}
+
+.projector-page .projector-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+}
+
+.projector-page .projector-title {
+    font-size: clamp(1.6rem, 1.85vw, 1.95rem);
+    font-weight: 700;
+    color: #1a3477;
+    line-height: 1;
+}
+
+.projector-page .debate-topic {
+    font-size: clamp(1.06rem, 1.15vw, 1.25rem);
+    color: #1d4a9b;
+    margin-top: 6px;
+    margin-bottom: 2px;
+    font-weight: 600;
+}
+
+.projector-page .debate-question {
+    font-size: clamp(0.95rem, 1.02vw, 1.08rem);
+    color: #3a5078;
+    margin: 0;
+}
+
+.projector-page .projector-divider {
+    margin-top: 8px;
+    height: 1px;
+    background: #c9d5ec;
+}
+
+.projector-page .speakers-section {
+    margin-top: 8px;
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+}
+
+.projector-page .current-speaker {
+    font-size: clamp(1.22rem, 1.5vw, 1.45rem);
+    color: #12346b;
+    margin-bottom: 6px;
+    font-weight: 700;
+    gap: 10px;
+}
+
+.projector-page .current-speaker .mic {
+    font-size: 1.2em;
+}
+
+.projector-page .timer-display {
+    margin: 0;
+    min-width: 130px;
+    padding: 8px 12px;
+    border-radius: 3px;
+    border: 2px solid #879bc7;
+    text-align: center;
+    font-size: clamp(2.25rem, 2.8vw, 2.9rem);
+    font-weight: 700;
+    font-family: 'Consolas', monospace;
+    background: #ffffff;
+    color: #0f346f;
+    line-height: 1;
+}
+
+.projector-page .timer-display.running {
+    color: #0f346f;
+}
+
+.projector-page .timer-display.paused {
+    color: #334155;
+    background: #f4f7ff;
+}
+
+.projector-page .speakers-list {
+    font-size: clamp(1.02rem, 1.2vw, 1.18rem);
+    line-height: 1.36;
+    color: #1f3564;
+    padding-left: 26px;
+    max-height: 100%;
+    overflow: auto;
+}
+
+.projector-page .speakers-list li {
+    margin-bottom: 1px;
+}
+
+.projector-page .speakers-list li.next-speaker {
+    font-weight: 700;
+    color: #0c3578;
+}
+
+.projector-page .next-badge {
+    display: inline-block;
+    margin-right: 8px;
+    padding: 0 8px;
+    border-radius: 10px;
+    background: #dbe8ff;
+    color: #1a3477;
+    font-size: 0.9em;
+}
+
+.projector-page .projector-footer {
+    height: 16px;
+    width: 100%;
+    background: linear-gradient(180deg, #0e4bc0 0%, #0a3fa5 100%);
+    position: fixed;
+    left: 0;
+    bottom: 0;
 }

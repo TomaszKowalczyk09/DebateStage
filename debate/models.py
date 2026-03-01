@@ -10,6 +10,9 @@ class DebateSettings(models.Model):
 	timer_remaining_seconds = models.PositiveIntegerField(default=300)
 	timer_running = models.BooleanField(default=False)
 	timer_started_at = models.DateTimeField(null=True, blank=True)
+	sound_warning_enabled = models.BooleanField(default=True)
+	sound_end_enabled = models.BooleanField(default=True)
+	sound_muted = models.BooleanField(default=False)
 	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):

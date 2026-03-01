@@ -7,23 +7,30 @@
     <title>Debata - System Obsługi</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-<body>
-    <div class="topbar">
-        <div class="event-title" id="event-title">Debata Szkolna 2026</div>
+<body class="projector-page">
+    <div class="topbar projector-topbar">
+        <div class="event-title-wrap">
+            <div class="event-title" id="event-title">Debata Szkolna 2026</div>
+            <div class="event-subtitle">System prowadzenia debaty</div>
+        </div>
         <div class="clock" id="clock">11:21</div>
     </div>
     <div id="app">
-        <div class="debate-list-container">
+        <div class="debate-list-container projector-board">
             <div class="debate-header">
+                <div class="projector-header-row">
+                    <div class="projector-title">Lista mówców</div>
+                    <div class="timer-display" id="timer-display">05:00</div>
+                </div>
                 <div class="debate-topic" id="debate-topic">Temat debaty</div>
                 <div class="debate-question" id="debate-question">Pytanie debaty</div>
+                <div class="projector-divider"></div>
             </div>
             <div class="speakers-section">
                 <div class="current-speaker" id="current-speaker">
                     <span class="mic">🎤</span>
                     <span class="name">Imię Nazwisko</span>
                 </div>
-                <div class="timer-display" id="timer-display">05:00</div>
                 <ol class="speakers-list" id="speakers-list">
                     <li>Uczeń 1 (klasa)</li>
                     <li>Uczeń 2 (klasa)</li>
@@ -32,6 +39,7 @@
             </div>
         </div>
     </div>
+    <div class="projector-footer"></div>
     <script src="{% static 'js/app.js' %}"></script>
 </body>
 </html>

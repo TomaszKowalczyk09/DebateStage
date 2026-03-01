@@ -42,6 +42,22 @@ function setInputValueUnlessFocused(elementId, value) {
     }
 }
 
+function setCheckboxValue(elementId, value) {
+    const element = document.getElementById(elementId);
+    if (!element) {
+        return;
+    }
+    element.checked = Boolean(value);
+}
+
+function getCheckboxValue(elementId) {
+    const element = document.getElementById(elementId);
+    if (!element) {
+        return false;
+    }
+    return Boolean(element.checked);
+}
+
 function renderCurrentSpeaker() {
     const topicEl = document.getElementById('operator-topic');
     const currentNameEl = document.getElementById('operator-current-name');
@@ -73,6 +89,9 @@ function renderConfigInputs() {
     setInputValueUnlessFocused('topic-input', appState.topic);
     setInputValueUnlessFocused('question-input', appState.question);
     setInputValueUnlessFocused('default-seconds-input', String(appState.defaultSpeechSeconds));
+    setCheckboxValue('sound-warning-input', appState.soundWarningEnabled);
+    setCheckboxValue('sound-end-input', appState.soundEndEnabled);
+    setCheckboxValue('sound-muted-input', appState.soundMuted);
 }
 
 function renderSpeakers() {
@@ -181,6 +200,9 @@ async function saveDebateConfig() {
     const topic = getInputValue('topic-input', '').trim();
     const question = getInputValue('question-input', '').trim();
     const defaultSpeechSeconds = Number(getInputValue('default-seconds-input', '0'));
+    const soundWarningEnabled = getCheckboxValue('sound-warning-input');
+    const soundEndEnabled = getCheckboxValue('sound-end-input');
+    const soundMuted = getCheckboxValue('sound-muted-input');
 
     if (!eventTitle || !topic || !question || defaultSpeechSeconds < 1) {
         return;
@@ -191,6 +213,9 @@ async function saveDebateConfig() {
         topic,
         question,
         defaultSpeechSeconds,
+        soundWarningEnabled,
+        soundEndEnabled,
+        soundMuted,
     });
 }
 
