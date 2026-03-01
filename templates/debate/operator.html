@@ -24,6 +24,38 @@
                 <span class="operator-user">Operator</span>
             </div>
             <section class="operator-content">
+                <h2 class="operator-section-title">Ustawienia debaty</h2>
+
+                <form id="debate-config-form" class="debate-config-form">
+                    <label>
+                        Tytuł debaty
+                        <input type="text" id="event-title-input" required>
+                    </label>
+                    <label>
+                        Temat
+                        <input type="text" id="topic-input" required>
+                    </label>
+                    <label>
+                        Pytanie
+                        <input type="text" id="question-input" required>
+                    </label>
+                    <label>
+                        Domyślny czas mowy (sekundy)
+                        <input type="number" id="default-seconds-input" min="1" required>
+                    </label>
+                    <button type="submit">Zapisz ustawienia</button>
+                </form>
+
+                <div class="operator-timer-panel">
+                    <div class="operator-timer-title">Timer: <span id="operator-timer-display">05:00</span></div>
+                    <div class="operator-timer-actions">
+                        <button type="button" id="timer-toggle">Start</button>
+                        <button type="button" id="timer-reset">Reset</button>
+                        <button type="button" id="timer-minus">-15 s</button>
+                        <button type="button" id="timer-plus">+15 s</button>
+                    </div>
+                </div>
+
                 <h2 class="operator-section-title" id="operator-topic">TOP 4 · Debata szkolna</h2>
                 <div class="operator-current-speaker" id="operator-current-speaker">
                     <span class="mic">🎤</span>

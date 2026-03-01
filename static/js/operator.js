@@ -17,13 +17,42 @@ const csrftoken = getCookie('csrftoken');
 
 let appState = null;
 
+function formatSecondsToClock(totalSeconds) {
+    const safeSeconds = Math.max(0, Number(totalSeconds) || 0);
+    const minutes = Math.floor(safeSeconds / 60).toString().padStart(2, '0');
+    const seconds = (safeSeconds % 60).toString().padStart(2, '0');
+    return `${minutes}:${seconds}`;
+}
+
+function getInputValue(elementId, fallback = '') {
+    const element = document.getElementById(elementId);
+    if (!element) {
+        return fallback;
+    }
+    return element.value;
+}
+
+function setInputValueUnlessFocused(elementId, value) {
+    const element = document.getElementById(elementId);
+    if (!element) {
+        return;
+    }
+    if (document.activeElement !== element) {
+        element.value = value;
+    }
+}
+
 function renderCurrentSpeaker() {
     const topicEl = document.getElementById('operator-topic');
     const currentNameEl = document.getElementById('operator-current-name');
     const starBtn = document.getElementById('toggle-star');
     const warnBtn = document.getElementById('toggle-warn');
+    const timerDisplay = document.getElementById('operator-timer-display');
+    const timerToggleButton = document.getElementById('timer-toggle');
 
     topicEl.textContent = appState.topic;
+    timerDisplay.textContent = formatSecondsToClock(appState.timerSeconds);
+    timerToggleButton.textContent = appState.timerRunning ? 'Pauza' : 'Start';
 
     if (!appState.currentSpeaker) {
         currentNameEl.textContent = 'Brak mówcy';
@@ -37,6 +66,13 @@ function renderCurrentSpeaker() {
     warnBtn.disabled = false;
     starBtn.style.opacity = appState.currentSpeaker.star ? '1' : '0.5';
     warnBtn.style.opacity = appState.currentSpeaker.warn ? '1' : '0.5';
+}
+
+function renderConfigInputs() {
+    setInputValueUnlessFocused('event-title-input', appState.eventTitle);
+    setInputValueUnlessFocused('topic-input', appState.topic);
+    setInputValueUnlessFocused('question-input', appState.question);
+    setInputValueUnlessFocused('default-seconds-input', String(appState.defaultSpeechSeconds));
 }
 
 function renderSpeakers() {
@@ -60,6 +96,7 @@ function renderSpeakers() {
 }
 
 function render() {
+    renderConfigInputs();
     renderCurrentSpeaker();
     renderSpeakers();
 }
@@ -83,6 +120,14 @@ async function requestJson(url, options = {}) {
 
 async function loadState() {
     appState = await requestJson('/api/state/');
+    render();
+}
+
+async function patchState(payload) {
+    appState = await requestJson('/api/state/', {
+        method: 'PATCH',
+        body: JSON.stringify(payload),
+    });
     render();
 }
 
@@ -115,11 +160,7 @@ async function selectSpeaker(id) {
         return;
     }
 
-    appState = await requestJson('/api/state/', {
-        method: 'PATCH',
-        body: JSON.stringify({ currentSpeakerIndex: index }),
-    });
-    render();
+    await patchState({ currentSpeakerIndex: index });
 }
 
 async function toggleFlag(flagName) {
@@ -135,10 +176,47 @@ async function toggleFlag(flagName) {
     render();
 }
 
+async function saveDebateConfig() {
+    const eventTitle = getInputValue('event-title-input', '').trim();
+    const topic = getInputValue('topic-input', '').trim();
+    const question = getInputValue('question-input', '').trim();
+    const defaultSpeechSeconds = Number(getInputValue('default-seconds-input', '0'));
+
+    if (!eventTitle || !topic || !question || defaultSpeechSeconds < 1) {
+        return;
+    }
+
+    await patchState({
+        eventTitle,
+        topic,
+        question,
+        defaultSpeechSeconds,
+    });
+}
+
+async function toggleTimer() {
+    await patchState({ timerCommand: appState.timerRunning ? 'pause' : 'start' });
+}
+
+async function resetTimer() {
+    await patchState({ timerCommand: 'reset' });
+}
+
+async function adjustTimerBy(deltaSeconds) {
+    const nextTimerSeconds = Math.max(0, (Number(appState.timerSeconds) || 0) + deltaSeconds);
+    await patchState({ timerSeconds: nextTimerSeconds });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
+    const configForm = document.getElementById('debate-config-form');
     const form = document.getElementById('add-speaker-form');
     const input = document.getElementById('add-speaker-input');
     const list = document.getElementById('operator-speakers-list');
+
+    configForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        await saveDebateConfig();
+    });
 
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
@@ -185,5 +263,22 @@ document.addEventListener('DOMContentLoaded', async () => {
         await toggleFlag('warn');
     });
 
+    document.getElementById('timer-toggle').addEventListener('click', async () => {
+        await toggleTimer();
+    });
+
+    document.getElementById('timer-reset').addEventListener('click', async () => {
+        await resetTimer();
+    });
+
+    document.getElementById('timer-minus').addEventListener('click', async () => {
+        await adjustTimerBy(-15);
+    });
+
+    document.getElementById('timer-plus').addEventListener('click', async () => {
+        await adjustTimerBy(15);
+    });
+
     await loadState();
+    setInterval(loadState, 1000);
 });

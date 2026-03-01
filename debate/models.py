@@ -7,6 +7,9 @@ class DebateSettings(models.Model):
 	question = models.CharField(max_length=400, default='Czy szkoła powinna wprowadzić mundurki?')
 	default_speech_seconds = models.PositiveIntegerField(default=300)
 	current_speaker_index = models.PositiveIntegerField(default=0)
+	timer_remaining_seconds = models.PositiveIntegerField(default=300)
+	timer_running = models.BooleanField(default=False)
+	timer_started_at = models.DateTimeField(null=True, blank=True)
 	updated_at = models.DateTimeField(auto_now=True)
 
 	def __str__(self):
@@ -34,15 +37,15 @@ class DebateSettings(models.Model):
 
 
 class Speaker(models.Model):
-	settings = models.ForeignKey(DebateSettings, on_delete=models.CASCADE, related_name='speakers')
-	name = models.CharField(max_length=200)
-	description = models.CharField(max_length=200, blank=True)
-	position = models.PositiveIntegerField(default=0)
-	star = models.BooleanField(default=False)
-	warn = models.BooleanField(default=False)
+    settings = models.ForeignKey(DebateSettings, on_delete=models.CASCADE, related_name='speakers')
+    name = models.CharField(max_length=200)
+    description = models.CharField(max_length=200, blank=True)
+    position = models.PositiveIntegerField(default=0)
+    star = models.BooleanField(default=False)
+    warn = models.BooleanField(default=False)
 
-	class Meta:
-		ordering = ('position', 'id')
+    class Meta:
+        ordering = ('position', 'id')
 
-	def __str__(self):
-		return self.name
+    def __str__(self):
+        return self.name
